@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <Button fx:id="debitButton" layoutX="451.0" layoutY="292.0" mnemonicParsing="false" onAction="#debitButton" prefHeight="65.0" prefWidth="125.0" text="Debit">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <TableView fx:id="transactionList" layoutX="14.0" layoutY="96.0" prefHeight="326.0" prefWidth="426.0">
+         <columns>
+            <TableColumn fx:id="idColumn" prefWidth="44.99998474121094" text="ID" />
+            <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
+            <TableColumn fx:id="debitColumn" prefWidth="101.0" text="Debit" />
+            <TableColumn fx:id="creditColumn" prefWidth="107.0" text="Credit" />
+            <TableColumn fx:id="infoColumn" prefWidth="106.0" text="Information" />
+         </columns>
+      </TableView>
+      <TextField fx:id="amountText" layoutX="543.0" layoutY="146.0" prefHeight="52.0" prefWidth="167.0" />
+      <Button fx:id="creditButton" layoutX="584.0" layoutY="292.0" mnemonicParsing="false" onAction="#creditButton" prefHeight="65.0" prefWidth="125.0" text="Credit">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="421.0" layoutY="132.0" prefHeight="80.0" prefWidth="115.0" text="    Amount" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="179.0" layoutY="23.0" text="Money Management">
+         <font>
+            <Font size="44.0" />
+         </font>
+      </Label>
+      <Label layoutX="434.0" layoutY="198.0" prefHeight="80.0" prefWidth="115.0" text="      Info" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <TextField fx:id="infoText" layoutX="543.0" layoutY="212.0" prefHeight="52.0" prefWidth="167.0" />
+   </children>
+</Pane>
