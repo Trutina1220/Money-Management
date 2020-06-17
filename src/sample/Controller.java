@@ -33,6 +33,7 @@ public class Controller implements Initializable {
 
 
     Account mainAccount = Account.getInstance();
+    StockAccount stockAccount = StockAccount.getInstance();
 
     ObservableList<ModelTable> data = FXCollections.observableArrayList();
     static int id ;
@@ -84,16 +85,7 @@ public class Controller implements Initializable {
 
 
     public void stockButton(ActionEvent event) throws IOException {
-
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StockWindow.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root1));
-        stage.show();
-
-
-
+        showStockWindow();
     }
 
 
@@ -107,12 +99,10 @@ public class Controller implements Initializable {
            showWeeklyReport();
         }
 
+        if(checkMonth()){
+            showMonthlyReport();
 
-        Date previousWeek = mainAccount.getPreviousWeek();
-        LocalDate prevWeekLocal = previousWeek.toLocalDate();
-        Date nextWeekCheck = Date.valueOf(prevWeekLocal.plusWeeks(1));
-        String prevWeekString = previousWeek.toString();
-        String nextWeekString = nextWeekCheck.toString();
+        }
 
 
 
@@ -129,9 +119,9 @@ public class Controller implements Initializable {
 
         int saved = mainAccount.getReport(mainAccount.getPreviousWeek());
         int spending = mainAccount.getSpending(mainAccount.getPreviousWeek());
-
+        int stockMoney = mainAccount.sendStockMoney(stockAccount);
         WeeklyReport weekController = fxmlLoader.getController();
-        weekController.transferMessage(saved,spending);
+        weekController.transferMessage(saved,spending,stockMoney);
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root1));
@@ -154,6 +144,26 @@ public class Controller implements Initializable {
 
         MonthReport monthController = fxmlLoader.getController();
         monthController.setText(saved,spending);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root1));
+        stage.setAlwaysOnTop(true);
+
+        stage.show();
+    }
+
+    public void showStockWindow(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StockWindow.fxml"));
+        Parent root1 = null;
+        try {
+            root1 = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        StockWindow stockController = fxmlLoader.getController();
+        stockController.printStockDatabase();
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root1));

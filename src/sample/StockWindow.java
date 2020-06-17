@@ -54,7 +54,6 @@ public class StockWindow {
 
 
     public void printStockDatabase(){
-//        stockAccount.printDatabase();
 
 
         try{

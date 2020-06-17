@@ -7,7 +7,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.StockWindow">
 
     <children>
-        <TableView fx:id="stockList" layoutX="14.0" layoutY="96.0" prefHeight="305.0" prefWidth="414.0">
+        <TableView fx:id="stockList" layoutX="14.0" layoutY="99.0" prefHeight="302.0" prefWidth="399.0">
             <columns>
                 <TableColumn fx:id="stockId" prefWidth="44.99998474121094" text="ID" />
                 <TableColumn fx:id="stockBalance" prefWidth="83.0" text="Balance" />
@@ -16,13 +16,13 @@
                 <TableColumn fx:id="stockCredit" prefWidth="90.0" text="Credit" />
             </columns>
         </TableView>
-        <TextField fx:id="amountText" layoutX="525.0" layoutY="152.0" prefHeight="39.0" prefWidth="136.0" />
-        <Button fx:id="creditButton" layoutX="511.0" layoutY="216.0" mnemonicParsing="false" onAction="#creditButton" prefHeight="65.0" prefWidth="148.0" text="Credit">
+        <TextField fx:id="amountText" layoutX="513.0" layoutY="170.0" prefHeight="46.0" prefWidth="98.0" />
+        <Button fx:id="creditButton" layoutX="463.0" layoutY="232.0" mnemonicParsing="false" onAction="#creditButton" prefHeight="65.0" prefWidth="148.0" text="Credit">
             <font>
                 <Font name="System Bold" size="20.0" />
             </font>
         </Button>
-        <Label layoutX="409.0" layoutY="131.0" prefHeight="81.0" prefWidth="116.0" text="    Amount" textAlignment="CENTER">
+        <Label layoutX="398.0" layoutY="158.0" prefHeight="74.0" prefWidth="116.0" text="    Amount" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="23.0" />
             </font>
@@ -32,11 +32,6 @@
                 <Font size="44.0" />
             </font>
         </Label>
-      <Button fx:id="stockButton" layoutX="511.0" layoutY="298.0" mnemonicParsing="false" onAction="#printStockDatabase" prefHeight="65.0" prefWidth="148.0" text="Load Details">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Button>
     </children>
 
 </AnchorPane>

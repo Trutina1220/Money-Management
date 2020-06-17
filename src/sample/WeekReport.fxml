@@ -10,12 +10,17 @@
          <font>
             <Font name="System Bold" size="45.0" />
          </font></Label>
-      <Label fx:id="savedText" layoutX="118.0" layoutY="114.0" text="Saved: 800000">
+      <Label fx:id="savedText" layoutX="118.0" layoutY="96.0" text="Saved: 800000">
          <font>
             <Font size="42.0" />
          </font>
       </Label>
-      <Label fx:id="spendText" layoutX="118.0" layoutY="209.0" text="Saved: 800000">
+      <Label fx:id="spendText" layoutX="118.0" layoutY="158.0" text="Saved: 800000">
+         <font>
+            <Font size="42.0" />
+         </font>
+      </Label>
+      <Label fx:id="stockText" layoutX="118.0" layoutY="231.0" text="Saved: 800000">
          <font>
             <Font size="42.0" />
          </font>
