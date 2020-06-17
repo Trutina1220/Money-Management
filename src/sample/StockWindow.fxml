@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.StockWindow">
+
+    <children>
+        <Button fx:id="debitButton" layoutX="440.0" layoutY="227.0" mnemonicParsing="false" onAction="#debitButton" prefHeight="65.0" prefWidth="125.0" text="Debit">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font></Button>
+        <TableView fx:id="stockList" layoutX="14.0" layoutY="96.0" prefHeight="305.0" prefWidth="414.0">
+            <columns>
+                <TableColumn fx:id="stockId" prefWidth="44.99998474121094" text="ID" />
+                <TableColumn fx:id="stockBalance" prefWidth="83.0" text="Balance" />
+                <TableColumn fx:id="stockDate" prefWidth="93.0" text="Date" />
+                <TableColumn fx:id="stockDebit" prefWidth="102.0" text="Debit" />
+                <TableColumn fx:id="stockCredit" prefWidth="102.0" text="Credit" />
+            </columns>
+        </TableView>
+        <TextField fx:id="amountText" layoutX="534.0" layoutY="148.0" prefHeight="47.0" prefWidth="148.0" />
+        <Button fx:id="creditButton" layoutX="571.0" layoutY="227.0" mnemonicParsing="false" onAction="#creditButton" prefHeight="65.0" prefWidth="125.0" text="Credit">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font>
+        </Button>
+        <Label layoutX="409.0" layoutY="131.0" prefHeight="81.0" prefWidth="116.0" text="    Amount" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="23.0" />
+            </font>
+        </Label>
+        <Label layoutX="201.0" layoutY="20.0" text="Stock Account">
+            <font>
+                <Font size="44.0" />
+            </font>
+        </Label>
+    </children>
+
+</AnchorPane>

@@ -34,9 +34,7 @@ public class Controller implements Initializable {
 
     Account mainAccount = Account.getInstance();
 
-    ObservableList<ModelTable> data = FXCollections.observableArrayList(
-
-    );
+    ObservableList<ModelTable> data = FXCollections.observableArrayList();
     static int id ;
 
     public void debitButton(ActionEvent event){
