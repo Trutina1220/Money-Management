@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<Pane fx:id="stockButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Button fx:id="debitButton" layoutX="451.0" layoutY="292.0" mnemonicParsing="false" onAction="#debitButton" prefHeight="65.0" prefWidth="125.0" text="Debit">
          <font>
@@ -41,5 +41,10 @@
          </font>
       </Label>
       <TextField fx:id="infoText" layoutX="543.0" layoutY="212.0" prefHeight="52.0" prefWidth="167.0" />
+      <Button fx:id="stockButton" layoutX="493.0" layoutY="374.0" mnemonicParsing="false" onAction="#stockButton"  prefHeight="65.0" prefWidth="167.0" text="Stock Account">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

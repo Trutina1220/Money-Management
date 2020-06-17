@@ -2,9 +2,8 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
@@ -21,15 +20,45 @@ public class StockWindow {
     public TableColumn<StockModel,Integer> stockDebit;
     public TableColumn<StockModel,Integer> stockCredit;
     public StockAccount stockAccount = StockAccount.getInstance();
+
+    public TextField amountText;
+    static int id;
+    static Integer balance;
+    static int counter=0;
     ObservableList<StockModel> data = FXCollections.observableArrayList();
 
+    public void creditButton(ActionEvent event){
+        int amount = 0;
+        try {
+            amount = Integer.parseInt(amountText.getText());
+        }catch (Exception e ){
+            amount=0;
+        }
+        String date =stockAccount.getDateMonthYear().toString();
+        id += 1;
 
 
+        if ( amount == 0  ) {
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Warning");
+            a.setContentText("All data must be filled");
+            a.show();
+        }
+
+        else{
+            balance -= amount;
+            data.add(new StockModel(id,balance,date,0,amount));
+            stockAccount.insertDatabase(amount,'c');}
+    }
 
 
 
     public void printStockDatabase(){
+//        stockAccount.printDatabase();
+
+
         try{
+            stockList.getItems().clear();
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/saving","root","admin");
             Statement stat = con.createStatement();
 
@@ -41,21 +70,25 @@ public class StockWindow {
                         rs.getDate("date").toString(),
                         rs.getInt("debit"),
                         rs.getInt("credit")));
-
-
+                id = rs.getInt("idstock");
+                balance = rs.getInt("balance");
             }
 
         }catch (SQLException err){
             System.out.println(err.getMessage());
         }
 
-        stockId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        stockId.setCellValueFactory(new PropertyValueFactory<>("balance"));
-        stockId.setCellValueFactory(new PropertyValueFactory<>("date"));
-        stockId.setCellValueFactory(new PropertyValueFactory<>("debit"));
-        stockId.setCellValueFactory(new PropertyValueFactory<>("credit"));
+        this.stockId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        this.stockBalance.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        this.stockDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        this.stockDebit.setCellValueFactory(new PropertyValueFactory<>("debit"));
+        this.stockCredit.setCellValueFactory(new PropertyValueFactory<>("credit"));
 
-        stockList.setItems(data);
+        try {
+            this.stockList.setItems(data);
+        }catch (Exception e){
+            System.out.println("data can't be setted");
+        }
     }
 
 }
