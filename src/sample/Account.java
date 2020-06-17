@@ -93,7 +93,7 @@ public class Account implements Atm {
     @Override
     public int getSpending(Date previousCheck) {
         Date sqlDate = Date.valueOf(getDateMonthYear());
-        int amount = database.getSaved(sqlDate, previousCheck);
+        int amount = database.getSpending(sqlDate, previousCheck);
         return amount;
     }
 

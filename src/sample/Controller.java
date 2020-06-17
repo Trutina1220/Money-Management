@@ -1,12 +1,8 @@
 package sample;
 
-import com.mysql.cj.xdevapi.Table;
-import com.sun.webkit.Timer;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -16,15 +12,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
-
 
 
 public class Controller implements Initializable {
@@ -36,6 +27,8 @@ public class Controller implements Initializable {
     public TableColumn <ModelTable,Integer>creditColumn;
     public TableColumn <ModelTable,String>infoColumn;
     public TextField amountText,infoText;
+    public Label savedText;
+    public Label spendText;
 
 
 
@@ -110,9 +103,94 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         printDatabase();
+        if (checkWeek()){
+           showWeeklyReport();
+        }
+
+
+        Date previousWeek = mainAccount.getPreviousWeek();
+        LocalDate prevWeekLocal = previousWeek.toLocalDate();
+        Date nextWeekCheck = Date.valueOf(prevWeekLocal.plusWeeks(1));
+        String prevWeekString = previousWeek.toString();
+        String nextWeekString = nextWeekCheck.toString();
+
 
 
     }
+
+    public void showWeeklyReport(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("WeekReport.fxml"));
+        Parent root1 = null;
+        try {
+            root1 = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int saved = mainAccount.getReport(mainAccount.getPreviousWeek());
+        int spending = mainAccount.getSpending(mainAccount.getPreviousWeek());
+
+        WeeklyReport weekController = fxmlLoader.getController();
+        weekController.transferMessage(saved,spending);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root1));
+        stage.setAlwaysOnTop(true);
+
+        stage.show();
+    }
+
+    public void showMonthlyReport(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MonthReport.fxml"));
+        Parent root1 = null;
+        try {
+            root1 = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int saved = mainAccount.getReport(mainAccount.getPreviousMonth());
+        int spending = mainAccount.getSpending(mainAccount.getPreviousMonth());
+
+        MonthReport monthController = fxmlLoader.getController();
+        monthController.setText(saved,spending);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root1));
+        stage.setAlwaysOnTop(true);
+
+        stage.show();
+    }
+
+    public boolean checkWeek(){
+        Date previousWeek = mainAccount.getPreviousWeek();
+        LocalDate prevWeekLocal = previousWeek.toLocalDate();
+        Date nextWeekCheck = Date.valueOf(prevWeekLocal.plusWeeks(1));
+        String prevWeekString = previousWeek.toString();
+        String nextWeekString = nextWeekCheck.toString();
+        if(nextWeekString.equals("2020-06-09")){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+    public boolean checkMonth(){
+        Date previousMonth = mainAccount.getPreviousMonth();
+        LocalDate prevMonthLocal = previousMonth.toLocalDate();
+        Date nextMonthCheck = Date.valueOf(prevMonthLocal.plusMonths(1));
+        String prevMonthString = previousMonth.toString();
+        String nextMonthString = nextMonthCheck.toString();
+        if(nextMonthString.equals("2020-06-09")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 
     public void printDatabase(){
 
