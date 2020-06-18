@@ -3,6 +3,7 @@ package sample;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class Database {
 //    declaring the attributes
@@ -24,31 +25,17 @@ public class Database {
 //    mysql syntax to delete content of mysql databse
     private String delete = "delete from ";
 
+    static int weekCounter = 0 ;
+    static int monthCounter = 0;
 
-//    public int getBalance() {
-//        int balance = 0;
-//        try {
-//            Connection con = DriverManager.getConnection(this.host, this.uName, this.uPass);
-//            Statement stat = con.createStatement();
-//            ResultSet rs = stat.executeQuery(sql + this.tableName);
-//
-//
-//            while (rs.next()) {
-//
-//                int debit = rs.getInt("debit");
-//                balance += debit;
-//                int credit = rs.getInt("credit");
-//                balance -= credit;
-//
-//
-//            }
-//            return balance;
-//
-//        } catch (SQLException err) {
-//            System.out.println(err.getMessage());
-//            return balance;
-//        }
-//    }
+    public void increaseWeekCounter(){
+        weekCounter++;
+    }
+
+    public void increaseMonthCounter(){
+        monthCounter++;
+    }
+
 
 
 //function to make it a singleton class
@@ -60,28 +47,6 @@ public class Database {
     }
 
 
-//    public ObservableList<ModelTable> getInsertedObsList(ObservableList<ModelTable> obsList) {
-//        try {
-//            Connection con = DriverManager.getConnection(this.host, this.uName, this.uPass);
-//            Statement stat = con.createStatement();
-//
-//            ResultSet rs = stat.executeQuery(sql + this.tableName);
-//
-//            while (rs.next()) {
-//                obsList.add(new ModelTable(rs.getInt("id"),
-//                        rs.getDate("date").toString(), rs.getInt("debit"), rs.getInt("credit"),
-//                        rs.getString("information")));
-//
-//
-//            }
-
-//        } catch (SQLException err) {
-//            System.out.println(err.getMessage());
-//        }
-//        return obsList;
-//
-//
-//    }
 
 // a function to printall the databse to the console , to make it easy for debugging
     public void printAll() {
@@ -146,7 +111,7 @@ public class Database {
     }
 
     // a function to get how much you saved on that period of time
-    public int getSaved(Date currentDate, Date previousCheck) {
+    public int getSaved(Date startPeriod, Date endPeriod) {
         int saved = 0;
         try {
             Connection con = DriverManager.getConnection(this.host, this.uName, this.uPass);
@@ -158,7 +123,7 @@ public class Database {
                 Date tableDate = rs.getDate("date");
                 int debit = rs.getInt("debit");
                 int credit = rs.getInt("credit");
-                if (tableDate.before(currentDate) && tableDate.after(previousCheck)) {
+                if (tableDate.before(endPeriod) && tableDate.after(startPeriod)) {
                     saved += debit;
                     saved -= credit;
                 }
@@ -175,7 +140,7 @@ public class Database {
     }
 
 //     a function on how much you spend on that period of time
-    public int getSpending(Date currentDate, Date previousCheck) {
+    public int getSpending(Date startPeriod, Date endPeriod) {
         int spending = 0;
         try {
             Connection con = DriverManager.getConnection(this.host, this.uName, this.uPass);
@@ -187,7 +152,7 @@ public class Database {
                 Date tableDate = rs.getDate("date");
                 int debit = rs.getInt("debit");
                 int credit = rs.getInt("credit");
-                if (tableDate.before(currentDate) && tableDate.after(previousCheck)) {
+                if (tableDate.before(endPeriod) && tableDate.after(startPeriod)) {
                     spending += credit;
                 }
 
@@ -203,8 +168,8 @@ public class Database {
     }
 
 //    a function to get the first date that the daa is inputted
-    public Date getStartingDate() {
-        Date tableDate = Date.valueOf("2020-06-15");
+    public LocalDate getStartingDate() {
+        LocalDate tableDate = null ;
 
         try {
             Connection con = DriverManager.getConnection(this.host, this.uName, this.uPass);
@@ -213,8 +178,7 @@ public class Database {
 
 
             while (rs.next()) {
-                tableDate = rs.getDate("date");
-                return tableDate;
+                tableDate = rs.getDate("date").toLocalDate();
             }
 
 
@@ -224,6 +188,17 @@ public class Database {
         }
         return tableDate;
     }
+    public LocalDate get1MonthAfterDate(){
+        return getStartingDate().plusMonths(monthCounter);
+    }
+
+//    getting the a week after the date
+    public LocalDate get1WeekAfterDate(){
+        return getStartingDate().plusWeeks(weekCounter);
+    }
+
+//    get a month after the current date
+
 
 
 }

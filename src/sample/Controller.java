@@ -125,8 +125,8 @@ public class Controller implements Initializable {
             showMonthlyReport();
 // inserting to the observable list to display the data from my sql database on the startup of
 //            the program
-        printDatabase();
         }
+        printDatabase();
 
     }
 
@@ -140,9 +140,9 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 //getting the saved weekly from mainAccount
-        int saved = mainAccount.getReport(mainAccount.getPreviousWeek());
+        int saved = mainAccount.getReport(mainAccount.get1WeekAfterDate());
 //        getting the spent weekly from mainAccount
-        int spending = mainAccount.getSpending(mainAccount.getPreviousWeek());
+        int spending = mainAccount.getSpending(mainAccount.get1WeekAfterDate());
 //        getting the stock money to be sent to the stock account from mainAccount
         int stockMoney = mainAccount.sendStockMoney(stockAccount);
 //        getting the controller for the weekly report window
@@ -168,9 +168,9 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 //getting the saved monthly from mainAccount
-        int saved = mainAccount.getReport(mainAccount.getPreviousMonth());
+        int saved = mainAccount.getReport(mainAccount.get1MonthAfterDate());
 //        getting the spent monthly from main Account
-        int spending = mainAccount.getSpending(mainAccount.getPreviousMonth());
+        int spending = mainAccount.getSpending(mainAccount.get1MonthAfterDate());
 
 //        getting the month report window controller
         MonthReport monthController = fxmlLoader.getController();
@@ -210,33 +210,21 @@ public class Controller implements Initializable {
 
 //    this is the function to check the week if its already one week passed
     public boolean checkWeek(){
-        Date previousWeek = mainAccount.getPreviousWeek();
-        LocalDate prevWeekLocal = previousWeek.toLocalDate();
-        Date nextWeekCheck = Date.valueOf(prevWeekLocal.plusWeeks(1));
-        String prevWeekString = previousWeek.toString();
-        String nextWeekString = nextWeekCheck.toString();
-        if(nextWeekString.equals("2020-06-09")){
-            return true;
-        }
-        else{
-            return false;
-        }
+        LocalDate startDate = mainAccount.getStartingDate();
+        LocalDate currentDate = mainAccount.getDateMonthYear();
+        mainAccount.increaseWeekCounter();
+
+        return startDate.plusWeeks(1).equals(currentDate);
 
     }
 
 //    this is the function to check if already one month passed
     public boolean checkMonth(){
-        Date previousMonth = mainAccount.getPreviousMonth();
-        LocalDate prevMonthLocal = previousMonth.toLocalDate();
-        Date nextMonthCheck = Date.valueOf(prevMonthLocal.plusMonths(1));
-        String prevMonthString = previousMonth.toString();
-        String nextMonthString = nextMonthCheck.toString();
-        if(nextMonthString.equals("2020-06-09")){
-            return true;
-        }
-        else{
-            return false;
-        }
+        LocalDate startPeriod = mainAccount.getStartingDate();
+        LocalDate currentDate = mainAccount.getDateMonthYear();
+        mainAccount.increaseMonthCounter();
+
+        return startPeriod.plusMonths(1).equals(currentDate);
     }
 
 //    this function is for inserting the table on the windows to display the data

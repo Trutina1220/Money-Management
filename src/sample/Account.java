@@ -18,10 +18,8 @@ public class Account implements Atm {
     private StockDatabase stockDatabase = StockDatabase.getInstance();
 //    Local date to get the local date at the current moment to insert to the database
     private LocalDate startingDate = getStartingDate();
-//    previous check week, to get the weekly report , this attribute become the starting range
-    private Date previousCheckWeek = getPreviousWeek();
-//    previous check , to get the monthly report , this attribute become the starting range
-    private Date previousCheckMonth = getPreviousMonth();
+
+
 
 // a function to make it a singleton
     public static Account getInstance(){
@@ -34,18 +32,16 @@ public class Account implements Atm {
 
 // this function to get the starting date , the starting date is the first date that the database is inputted
     public LocalDate getStartingDate(){
-        return database.getStartingDate().toLocalDate();
+        return database.getStartingDate();
     }
 
-//    to get the previous week , i just take the starting date and minus 1 week
-    public Date getPreviousWeek() {
-        Date prevWeek = Date.valueOf(startingDate.minusWeeks(1));
-        return prevWeek;
+//   calling database function to get 1 week after date
+    public LocalDate get1WeekAfterDate() {
+        return database.get1WeekAfterDate();
     }
-// to get the previous month , i just take the starting date and minus 1 month
-    public Date getPreviousMonth(){
-        Date prevMonth = Date.valueOf(startingDate.minusMonths(1));
-        return prevMonth;
+//calling database function to get 1 month after date
+    public LocalDate get1MonthAfterDate() {
+        return database.get1MonthAfterDate();
     }
 
 //    this is the function to get the current date
@@ -64,15 +60,25 @@ public class Account implements Atm {
     }
 
 
+//    this is the function to keep track how many weekly report have been recorded
+    public void increaseWeekCounter(){
+        database.increaseWeekCounter();
+    }
+
+//    this is the function to keep track how many monthly report have been recorded
+    public void increaseMonthCounter(){
+        database.increaseMonthCounter();
+    }
 
 
 //    this is the function for getting the saving report on how much you saved on that period
 //    , it can get weekly or monthly report , just enter the starting range
 //    of the date
     @Override
-    public int getReport(Date previousCheck) {
-        Date sqlDate = Date.valueOf(getDateMonthYear());
-        int amount = database.getSaved(sqlDate, previousCheck);
+    public int getReport(LocalDate endPeriod) {
+        Date nextPeriod = Date.valueOf(endPeriod);
+        Date startPeriod = Date.valueOf(database.getStartingDate());
+        int amount = database.getSaved(startPeriod,nextPeriod );
         return amount;
     }
     //    this is the function for getting the spending report on how much you spent on that period
@@ -80,9 +86,10 @@ public class Account implements Atm {
 //    of the date
 
     @Override
-    public int getSpending(Date previousCheck) {
-        Date sqlDate = Date.valueOf(getDateMonthYear());
-        int amount = database.getSpending(sqlDate, previousCheck);
+    public int getSpending(LocalDate endPeriod) {
+        Date nextPeriod = Date.valueOf(endPeriod);
+        Date startPeriod = Date.valueOf(database.getStartingDate());
+        int amount = database.getSpending(startPeriod, nextPeriod);
         return amount;
     }
 
@@ -92,7 +99,7 @@ public class Account implements Atm {
     @Override
     public int sendStockMoney(StockAccount s) {
 
-        int weeklySaving = getReport(previousCheckWeek) * 20 / 100;
+        int weeklySaving = getReport(database.get1WeekAfterDate()) * 20 / 100;
         stockDatabase.insert(Date.valueOf(getDateMonthYear()),weeklySaving,'d');
         database.insert(Date.valueOf(getDateMonthYear()),weeklySaving,"Sent to Stock Account",'c');
         return weeklySaving;
@@ -103,6 +110,8 @@ public class Account implements Atm {
     public void insert(Date date,int amount , String information, char type){
         database.insert(date,amount,information,type);
     }
+
+
 }
 
 
