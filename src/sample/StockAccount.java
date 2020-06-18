@@ -17,10 +17,7 @@ public class StockAccount extends Account {
     }
 
 
-//    a function to record how much you spent to buy stocks , and insert it to the databse
-    public void buyStock(int amount){
-        sDB.insert(Date.valueOf(getDateMonthYear()),amount,'c');
-    }
+
 
 //    a function to delete the content of the databse , mainly use for debugging
     @Override
