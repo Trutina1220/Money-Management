@@ -11,22 +11,33 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-public class StockWindow {
 
+//this is the controller for the StockWindow.fxml
+public class StockWindow {
+//taking all the table and label  created from stockWindow.fxml or scene builder
     public TableView stockList;
     public TableColumn<StockModel,Integer> stockId;
     public TableColumn<StockModel,Integer> stockBalance;
     public TableColumn<StockModel,String> stockDate;
     public TableColumn<StockModel,Integer> stockDebit;
     public TableColumn<StockModel,Integer> stockCredit;
-    public StockAccount stockAccount = StockAccount.getInstance();
-
     public TextField amountText;
+//getting the stock account instance to be able to use the function
+    public StockAccount stockAccount = StockAccount.getInstance();
+//    creating a static id to keep track of the id for the observable list when inserting
     static int id;
+//    creating a static balance to keep track of the balance for the observable list
     static Integer balance;
-    static int counter=0;
+
+//    creating an observable list for the stock account windows
+//    it will keeptrack for the table in the windows on all the transaction
     ObservableList<StockModel> data = FXCollections.observableArrayList();
 
+//    a function that happened when the credit button was click
+//    take the amount from the text field
+//    inserting it to the databse
+//    inserting it to the table
+//    throw the error message if the amount is not filled
     public void creditButton(ActionEvent event){
         int amount = 0;
         try {
@@ -38,7 +49,7 @@ public class StockWindow {
         id += 1;
 
 
-        if ( amount == 0  ) {
+        if ( amount <= 0  ) {
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setTitle("Warning");
             a.setContentText("All data must be filled");
@@ -53,9 +64,8 @@ public class StockWindow {
 
 
 
+//     a method to insert to the transaction table in the stock account window
     public void printStockDatabase(){
-
-
         try{
             stockList.getItems().clear();
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/saving","root","admin");

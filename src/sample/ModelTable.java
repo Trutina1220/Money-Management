@@ -7,6 +7,11 @@ import javafx.beans.property.StringProperty;
 
 import java.sql.Date;
 
+// creating a model table class so that it can be inserted to the observable list for the main account table
+// it needs a simpleString format not just string
+// also works for the other datatype
+// and just generate constructor , seter and getter
+
 public class ModelTable {
     private SimpleIntegerProperty id;
     private SimpleStringProperty date;

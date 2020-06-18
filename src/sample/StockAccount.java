@@ -1,12 +1,14 @@
 package sample;
 
 import java.sql.Date;
-import java.util.Calendar;
+
 
 public class StockAccount extends Account {
+// taking the stockdatabse class to be able to use the stockdatabse
     private StockDatabase sDB = StockDatabase.getInstance();
-    private static StockAccount instance = null;
 
+//    making it a singleton class , because only one instance is needed
+    private static StockAccount instance = null;
     public static StockAccount getInstance(){
         if(instance==null){
             instance = new StockAccount();
@@ -14,27 +16,24 @@ public class StockAccount extends Account {
         return instance;
     }
 
+
+//    a function to record how much you spent to buy stocks , and insert it to the databse
     public void buyStock(int amount){
-
         sDB.insert(Date.valueOf(getDateMonthYear()),amount,'c');
-
     }
 
-    @Override
-    public int getBalance() {
-        return sDB.getBalance();
-    }
-
+//    a function to delete the content of the databse , mainly use for debugging
     @Override
     public void deleteDatabase() {
         sDB.deleteData();
     }
-
+// a function to print the databse content mainly use for testing
     @Override
     public void printDatabase() {
         sDB.printAll();
     }
 
+//   a function to insert to the stock databse
     public void insertDatabase(int amount , char type){
         Date sqlDate = Date.valueOf(getDateMonthYear());
         sDB.insert(sqlDate,amount,type);

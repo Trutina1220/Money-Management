@@ -4,6 +4,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+
+// creating a model table class so that it can be inserted to the observable list for the stock account table
+// it needs a simpleString format not just string
+// also works for the other datatype
+// and just generate constructor , seter and getter
 public class StockModel {
     private SimpleIntegerProperty id;
     private SimpleIntegerProperty balance;
